@@ -10,7 +10,7 @@ pipeline{
 	stages{
 		stage("Fetch Code from GitHub Repo"){
 			steps{
-				git url: 'https://github.com/PriyanshiSarad/Jenkins-Assignment2.git'
+				git branch: 'master', url: 'https://github.com/PriyanshiSarad/Jenkins-Assignment2.git'
 			}
 		}
 		stage("Build with Maven"){
@@ -27,7 +27,7 @@ pipeline{
 		stage("Build Docker Image"){
 			steps{
 				script{
-					dockerImage = docker.build( IMAGE_NAME + ":${BUILD_ID}", "./Dockerfile" )
+					dockerImage = docker.build( IMAGE_NAME + ":${BUILD_ID}", "Dockerfile" )
 				}
 			}
 		}
