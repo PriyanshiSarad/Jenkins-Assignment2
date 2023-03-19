@@ -1,7 +1,8 @@
 pipeline{
 	agent any
 	tools{
-
+        jdk "JAVA8"
+        maven "MAVEN3.8"
 	}
 	stages{
 		stage("Fetch Code from GitHub Repo"){
