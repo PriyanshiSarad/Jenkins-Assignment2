@@ -27,7 +27,7 @@ pipeline{
 		stage("Build Docker Image"){
 			steps{
 				script{
-					dockerImage = docker.build( IMAGENAME:${BUILD_ID}, "./Dockerfile" )
+					dockerImage = docker.build( IMAGENAME + ":${BUILD_ID}", "./Dockerfile" )
 				}
 			}
 		}
