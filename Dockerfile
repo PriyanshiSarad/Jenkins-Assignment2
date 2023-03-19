@@ -5,3 +5,5 @@ MAINTAINER "itspriyanshisarad@gmail.com"
 
 COPY ./webapp/target/webapp.war /usr/local/tomcat/webapps/
 
+CMD ["catalina.sh", "run"]
+
