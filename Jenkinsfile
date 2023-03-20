@@ -35,6 +35,13 @@ pipeline{
                }
 			}
 		}
+		stage("Quality Gate Result"){
+	         steps{
+	             timeout(time: 1, unit: 'HOURS') {
+                      waitForQualityGate abortPipeline: true
+                 }
+	         }
+	     }
 		stage("Build with Maven"){
 			steps{
 				sh 'mvn clean install'
