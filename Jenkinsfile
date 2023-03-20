@@ -8,6 +8,8 @@ pipeline{
 		IMAGE_NAME = '050570190265.dkr.ecr.us-east-1.amazonaws.com/artifact'
 		REGISTRY_URL = "https://050570190265.dkr.ecr.us-east-1.amazonaws.com"
 		REGISTRY_CREDENTIALS = "ecr:us-east-1:awsCredentials"
+		CLUSTER = 'JenkinsProd'
+		SERVICE = 'JenkinsService'
 	}
 	stages{
 		stage("Fetch Code from GitHub Repo"){
@@ -67,6 +69,13 @@ pipeline{
                        dockerImage.push("$BUILD_NUMBER")
                        dockerImage.push("latest")
                     }
+				}
+			}
+		}
+		stage("Deploy to ECS"){
+			steps{
+				withAWS(credentials: 'awsCredential', region: 'us-east-1'){
+					sh 'aws ecs  update-service --cluster ${CLUSTER} --service ${SERVICE} --force-new-deployment'
 				}
 			}
 		}
