@@ -8,13 +8,26 @@ pipeline{
 		IMAGE_NAME = '050570190265.dkr.ecr.us-east-1.amazonaws.com/artifact'
 		REGISTRY_URL = "https://050570190265.dkr.ecr.us-east-1.amazonaws.com"
 		REGISTRY_CREDENTIALS = "ecr:us-east-1:awsCredentials"
-		CLUSTER = 'JenkinsProd'
-
 	}
 	stages{
 		stage("Fetch Code from GitHub Repo"){
 			steps{
 				git branch: 'master', url: 'https://github.com/PriyanshiSarad/Jenkins-Assignment2.git'
+			}
+		}
+		stage("Code Analyssis with Sonarqube"){
+			environment{
+					scannerHome = tool 'SONAR4.7'
+			}
+			steps{
+				withSonarQubeEnv('sonar') {
+					sh '''
+					${scannerHome}/bin/sonar-scanner \
+					-Dsonar.projectKey=Project \
+					-Dsonar.projectName=Project \
+					-Dsonar.projectVersion=1.0 \
+					-Dsonar.sources=webapp/src/ '''
+               }
 			}
 		}
 		stage("Build with Maven"){
