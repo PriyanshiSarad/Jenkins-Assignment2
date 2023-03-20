@@ -15,6 +15,11 @@ pipeline{
 				git branch: 'master', url: 'https://github.com/PriyanshiSarad/Jenkins-Assignment2.git'
 			}
 		}
+		stage("Checkstyle code analysis with Maven"){
+	         steps{
+	             sh 'mvn checkstyle:checkstyle'
+	         }
+	     }
 		stage("Code Analyssis with Sonarqube"){
 			environment{
 					scannerHome = tool 'SONAR4.7'
