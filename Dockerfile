@@ -1,9 +1,11 @@
-From tomcat:8-jre8
+FROM tomcat:8-jre11
 
 # Maintainer 
 MAINTAINER "itspriyanshisarad@gmail.com"
 
-COPY ./webapp/target/webapp.war /usr/local/tomcat/webapps/
+RUN rm -rf /usr/local/tomcat/webapps/*
+COPY ./webapp/target/webapp.war /usr/local/tomcat/webapps/ROOT.war
 
+EXPOSE 8080
 CMD ["catalina.sh", "run"]
 
